@@ -4,7 +4,7 @@ DATE=$(date +%Y%m%d%H%M)
 IMAGE_SIZE=224
 
 # MODULE=https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/feature_vector/4
-MODULE=https://tfhub.dev/google/imagenet/mobilenet_v2_130_224/classification/3
+MODULE=https://tfhub.dev/google/efficientnet/b0/classification/1
 
 SHELL_PATH=`pwd -P`
 
@@ -22,7 +22,7 @@ if python3 examples/image_retraining/retrain.py \
   --image_dir=tf_files/dataset \
   --tfhub_module=$MODULE \
   --bottleneck_dir=tf_files/bottlenecks \
-  --summaries_dir=tf_files/training_summaries \
+  --summaries_dir=tf_files/output/$DATE/training_summaries \
   --intermediate_output_graphs_dir=tf_files/intermediate_graphs \
   --intermediate_store_frequency=500 \
   --output_graph=tf_files/output/$DATE/retrained_graph.pb \
@@ -45,6 +45,10 @@ else
   exit 1
 fi
 
+echo $MODULE > tf_files.output/$DATE/MODULE
+echo $IMAGE_SIZE > tf_files.output/$DATE/IMAGE_SIZE
+
+tensorboard --logdir tf_files/output/$DATE/training_summaries &
 
 # python3 examples/image_retraining/retrain.py \
 #   --image_dir=tf_files/dataset \
