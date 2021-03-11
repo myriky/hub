@@ -11,9 +11,11 @@ SHELL_PATH=`pwd -P`
 PYTHONWARNINGS="ignore"
 
 echo $SHELL_PATH
-
 echo $MODULE
 
+COMMAND="tensorboard --logdir tf_files/output/$DATE/training_summaries &"
+echo $COMMAND | pbcopy 
+echo $COMMAND
 echo "============ begin ML trainning ============"
 
 mkdir "$SHELL_PATH/tf_files/output/$DATE"
@@ -47,8 +49,6 @@ fi
 
 echo $MODULE > tf_files.output/$DATE/MODULE
 echo $IMAGE_SIZE > tf_files.output/$DATE/IMAGE_SIZE
-
-tensorboard --logdir tf_files/output/$DATE/training_summaries &
 
 # python3 examples/image_retraining/retrain.py \
 #   --image_dir=tf_files/dataset \
